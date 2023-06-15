@@ -1,0 +1,19 @@
+:root {
+    --font-color: #444;
+}
+
+@font-face {
+    font-family: 'NunitoSans';
+    src: url('./NunitoSans.ttf');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'NunitoSans';
+}
+
+h1 {
+    font-size: 46px;
+    color: var(--font-color);
+}
