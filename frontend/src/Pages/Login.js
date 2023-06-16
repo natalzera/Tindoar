@@ -1,8 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./css/Login.css";
 
 const Login = () => {
+    // controla se o login é de doador ou entidade
+    const refTypeDonator = useRef(null);
+    const refTypeEntity = useRef(null);
+    const [ currentTypeUser, setCurrentTypeUser ] = useState("donator");
+    const changeTypeUser = (e) => {
+        if(e.target.classList.contains("current-type")) {
+            return;
+        }
+
+        refTypeDonator.current.classList.remove("current-type");
+        refTypeEntity.current.classList.remove("current-type");
+
+        if(currentTypeUser === "donator") {
+            setCurrentTypeUser("entity");
+        } else {
+            setCurrentTypeUser("donator");
+        }
+
+        e.target.classList.add("current-type");
+    };
 
     // atribui os valores do input lido a cada variável referente
     const [inputEmail, setInputEmail] = useState('');
@@ -55,8 +75,8 @@ const Login = () => {
             </div>
 
             <div className='types-user-list'>
-                <p className='type-user current-type'>Doador</p>
-                <p className='type-user'>Entidade</p>
+                <p onClick={(e) => changeTypeUser(e)} ref={refTypeDonator} className='type-user current-type'>Doador</p>
+                <p onClick={(e) => changeTypeUser(e)} ref={refTypeEntity} className='type-user'>Entidade</p>
             </div>
 
             <div className='forms-login'>

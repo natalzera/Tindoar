@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import "./css/Login.css"
-import "./css/Register.css"
+import { useNavigate } from 'react-router-dom';
+import "./css/Login.css";
+import "./css/Register.css";
 
 const Register = () => {
+    // controla se o registro é de doador ou entidade
     const refTypeDonator = useRef(null);
     const refTypeEntity = useRef(null);
-
     const [ currentTypeUser, setCurrentTypeUser ] = useState("donator");
-
     const changeTypeUser = (e) => {
         if(e.target.classList.contains("current-type")) {
             return;
@@ -25,21 +25,103 @@ const Register = () => {
         e.target.classList.add("current-type");
     };
 
+    // atribui os valores do input lido a cada variável referente
+    const [inputEmail, setInputEmail] = useState('');
+    const handleInputEmailChange = (event) => {
+        setInputEmail(event.target.value);
+    };
+
+    const [inputCNPJ, setInputCNPJ] = useState('');
+    const handleInputCNPJChange = (event) => {
+        setInputCNPJ(event.target.value);
+    };
+
+    const [inputPassword, setInputPassword] = useState('');
+    const handleInputPasswordChange = (event) => {
+        setInputPassword(event.target.value);
+    };
+
+    const [inputConfirmPassword, setInputConfirmPassword] = useState('');
+    const handleInputConfirmPasswordChange = (event) => {
+        setInputConfirmPassword(event.target.value);
+    };
+
+    const listenerKeyEnter = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            handleClickRegister();
+        }
+    };
+
+    const [acceptTerms, setAcceptTerms] = useState(false);
+    const handleHandleCheck = (event) => {
+        setAcceptTerms(event.target.checked);
+    };
+
+    // verifica os dados de registro e direciona à página do usuário
+    const isFilled = (input) => {
+        if(input === undefined || input.length === 0) return false;
+        return true;
+    };
+    const handleClickRegister = () => {
+        if(
+            !isFilled(inputEmail) || !isFilled(inputPassword) || !isFilled(inputConfirmPassword) 
+            || (currentTypeUser === "entity" && !isFilled(inputCNPJ)) || !acceptTerms
+        ) {
+            alert('Todos os campos devem ser preenchidos.');
+            return;
+        }
+        else if (inputPassword !== inputConfirmPassword) {
+            alert('As senhas devem ser iguais.');
+            setInputPassword('');
+            setInputConfirmPassword('');
+            return;
+        }
+
+        // reseta os valores de input
+        alert(inputEmail + ' ' + inputCNPJ + ' ' + inputPassword);
+        setInputCNPJ('');
+        setInputEmail('');
+        setInputPassword('');
+        setInputConfirmPassword('');
+    };
+
     const changeForm = (currentTypeUser) => {
         if(currentTypeUser === "donator") {
             return (
                 <>
                     <div className='input-login'>
                         <p>E-mail</p>
-                        <input type='text' id='input-email'></input>
+                        <input
+                            id="input-email" 
+                            onChange={handleInputEmailChange}
+                            value={inputEmail}
+                            type="email" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
                     </div>
                     <div className='input-login'>
                         <p>Senha</p>
-                        <input type='password' id='input-password'></input>
+                        <input
+                            id="input-password"
+                            onChange={handleInputPasswordChange}
+                            value={inputPassword}
+                            type="password" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
                     </div>
                     <div className='input-login'>
                         <p>Confirmar senha</p>
-                        <input type='password' id='input-confirm-password'></input>
+                        <input
+                            id="input-confirm-password"
+                            onChange={handleInputConfirmPasswordChange}
+                            value={inputConfirmPassword}
+                            type="password" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
                     </div>
                 </>
             );
@@ -48,24 +130,58 @@ const Register = () => {
                 <>
                     <div className='input-login'>
                         <p>E-mail</p>
-                        <input type='text' id='input-email'></input>
+                        <input
+                            id="input-email" 
+                            onChange={handleInputEmailChange}
+                            value={inputEmail}
+                            type="email" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
                     </div>
                     <div className='input-login'>
                         <p>CNPJ</p>
-                        <input type='text' id='input-email'></input>
+                        <input
+                            id="input-cnpj" 
+                            onChange={handleInputCNPJChange}
+                            value={inputCNPJ}
+                            type="text" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
                     </div>
                     <div className='input-login'>
                         <p>Senha</p>
-                        <input type='password' id='input-password'></input>
+                        <input
+                            id="input-password"
+                            onChange={handleInputPasswordChange}
+                            value={inputPassword}
+                            type="password" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
                     </div>
                     <div className='input-login'>
                         <p>Confirmar senha</p>
-                        <input type='password' id='input-confirm-password'></input>
+                        <input
+                            id="input-confirm-password"
+                            onChange={handleInputConfirmPasswordChange}
+                            value={inputConfirmPassword}
+                            type="password" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
                     </div>
                     
                 </>
             );
         }
+    };
+
+    // direciona o usuário para a tela de login
+    const navigate = useNavigate();
+    const handleLoginClick = () => {
+        navigate('/login');
     };
 
     return (
@@ -82,14 +198,14 @@ const Register = () => {
 
             <div className='forms-login'>
                 {changeForm(currentTypeUser)}
-                <input type='button' value='Criar conta' className='button-login' id='button-login'/>
+                <input type='button' value='Criar conta' className='button-login' onClick={handleClickRegister}/>
                 <div className="use-term">
-                    <input type="checkbox" id="check-use-terms"/>
+                    <input type="checkbox" id="check-use-terms" onChange={handleHandleCheck}/>
                     <p>Concordo com os termos de uso</p>
                 </div>
             </div>
 
-            <p id='create-acc'>Já possuo conta</p>
+            <p id='create-acc' onClick={handleLoginClick}>Já possuo conta</p>
         </div>
     );
 };
