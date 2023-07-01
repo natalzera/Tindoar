@@ -20,7 +20,7 @@ def login(name):
 
     # vou armazenar senha em plaintext mesmo, quem tiver a disposição de trocar pra hash + salt, sinta-se livre...
     # pode usar a sha356
-    query = DBHelper.execute_query("SELECT (ID, NAME, PASSWORD) FROM USER WHERE (EMAIL=:email)", fetch=True, params={'email':email})
+    query = DBHelper.execute_query("SELECT (cpf, name, password) FROM USER WHERE (email=:email)", fetch=True, params={'email':email})
     if len(query) == 0:
         return {'message': 'Usuário ou senha incorretos'}, 401
 
@@ -44,7 +44,7 @@ def register_user():
     num_res = request.json.get('num_res')
     comp = request.json.get('complemento')
 
-    query = db.execute_query("SELECT * FROM USER WHERE (EMAIL = :email or CPF = :cpf)", fetch=True, params={'email':email, 'cpf':cpf})
+    query = db.execute_query("SELECT * FROM USER WHERE (email = :email or cpf = :cpf)", fetch=True, params={'email':email, 'cpf':cpf})
     if len(query) > 0:
         return {'message': 'CPF ou email já estão em uso'}, 409
 
@@ -58,7 +58,7 @@ def register_user():
         'num_res': num_res,
         'comp': comp
     }
-    db.execute_query("INSERT INTO USER (CPF, EMAIL, NAME, PASSWORD, PHONE, CEP, NUM_RES, COMP) VALUES (:cpf, :email, :name, :pwd, :phone, :cep, :num_res, :comp)", params=params)
+    db.execute_query("INSERT INTO USER (cpf, email, name, password, phone, cep, num_res, comp) VALUES (:cpf, :email, :name, :pwd, :phone, :cep, :num_res, :comp)", params=params)
     return {'message': "Conta cadastrada com sucesso"}, 201
 
 
