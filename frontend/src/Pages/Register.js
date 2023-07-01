@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import "./css/Login.css";
 import "./css/Register.css";
+import Message from '../Components/Message';
 
 const Register = () => {
+    const navigate = useNavigate();
+
     // controla se o registro é de doador ou entidade
     const refTypeDonator = useRef(null);
     const refTypeEntity = useRef(null);
@@ -68,22 +72,22 @@ const Register = () => {
             !isFilled(inputEmail) || !isFilled(inputPassword) || !isFilled(inputConfirmPassword) 
             || (currentTypeUser === "entity" && !isFilled(inputCNPJ)) || !acceptTerms
         ) {
-            alert('Todos os campos devem ser preenchidos.');
+            toast.error('Todos os campos devem ser preenchidos.');
             return;
         }
         else if (inputPassword !== inputConfirmPassword) {
-            alert('As senhas devem ser iguais.');
+            toast.error('As senhas devem ser iguais.');
             setInputPassword('');
             setInputConfirmPassword('');
             return;
         }
 
         // reseta os valores de input
-        alert(inputEmail + ' ' + inputCNPJ + ' ' + inputPassword);
         setInputCNPJ('');
         setInputEmail('');
         setInputPassword('');
         setInputConfirmPassword('');
+        navigate('/login', { state: { successMessage: 'Usuário registrado!' } });
     };
 
     const changeForm = (currentTypeUser) => {
@@ -179,34 +183,36 @@ const Register = () => {
     };
 
     // direciona o usuário para a tela de login
-    const navigate = useNavigate();
     const handleLoginClick = () => {
         navigate('/login');
     };
 
     return (
-        <div className='content-login'>
-            <div className='content-title-login'>
-                <img src='./img/logo.jpg' alt='logo tindoar' className='img-logo-login'/>
-                <h1>tindoar</h1>
-            </div>
-
-            <div className='types-user-list'>
-                <p onClick={(e) => changeTypeUser(e)} ref={refTypeDonator} className='type-user current-type'>Doador</p>
-                <p onClick={(e) => changeTypeUser(e)} ref={refTypeEntity} className='type-user'>Entidade</p>
-            </div>
-
-            <div className='forms-login'>
-                {changeForm(currentTypeUser)}
-                <input type='button' value='Criar conta' className='button-login' onClick={handleClickRegister}/>
-                <div className="use-term">
-                    <input type="checkbox" id="check-use-terms" onChange={handleHandleCheck}/>
-                    <p>Concordo com os termos de uso</p>
+        <>
+            <Message />
+            <div className='content-login'>
+                <div className='content-title-login'>
+                    <img src='./img/logo.png' alt='logo tindoar' className='img-logo-login'/>
+                    <h1>tindoar</h1>
                 </div>
-            </div>
 
-            <p id='create-acc' onClick={handleLoginClick}>Já possuo conta</p>
-        </div>
+                <div className='types-user-list'>
+                    <p onClick={(e) => changeTypeUser(e)} ref={refTypeDonator} className='type-user current-type'>Doador</p>
+                    <p onClick={(e) => changeTypeUser(e)} ref={refTypeEntity} className='type-user'>Entidade</p>
+                </div>
+
+                <div className='forms-login'>
+                    {changeForm(currentTypeUser)}
+                    <input type='button' value='Criar conta' className='button-login' onClick={handleClickRegister}/>
+                    <div className="use-term">
+                        <input type="checkbox" id="check-use-terms" onChange={handleHandleCheck}/>
+                        <p>Concordo com os termos de uso</p>
+                    </div>
+                </div>
+
+                <p id='create-acc' onClick={handleLoginClick}>Já possuo conta</p>
+            </div>
+        </>
     );
 };
 

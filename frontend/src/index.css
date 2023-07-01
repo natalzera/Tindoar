@@ -1,6 +1,7 @@
 :root {
     --font-color: #444;
     --theme-color: 255, 77, 107;
+    --theme-color-dark: 185, 7, 37;
 }
 
 @font-face {

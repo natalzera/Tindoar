@@ -1,0 +1,10 @@
+{
+    "array": [
+        {"id":0, "userOwner":"natal", "img":"./img/itens/mesa.jpg", "title":"Mesa nova", "description":"Comprei esta mesa recentemente, mas não se encaixou em meu cômodo. Portanto estou doando :)", "type":"D"},
+        {"id":1, "userOwner":"robson", "img":"./img/itens/sofa.jpg", "title":"Sofá para salão", "description":"Precisamos de algum sofá parecido com este para nosso salão principal. Urgente!", "type":"P"},
+        {"id":2, "userOwner":"jose", "img":"./img/itens/mesa.jpg", "title":"Mesa nova", "description":"Comprei esta mesa recentemente, mas não se encaixou em meu cômodo. Portanto estou doando :)", "type":"D"},
+        {"id":3, "userOwner":"baran", "img":"./img/itens/sofa.jpg", "title":"Sofá para salão", "description":"Precisamos de algum sofá parecido com este para nosso salão principal. Urgente!", "type":"P"},
+        {"id":4, "userOwner":"felps", "img":"./img/itens/mesa.jpg", "title":"Mesa nova", "description":"Comprei esta mesa recentemente, mas não se encaixou em meu cômodo. Portanto estou doando :)", "type":"D"},
+        {"id":5, "userOwner":"perao", "img":"./img/itens/sofa.jpg", "title":"Sofá para salão", "description":"Precisamos de algum sofá parecido com este para nosso salão principal. Urgente!", "type":"P"}
+    ]
+}
