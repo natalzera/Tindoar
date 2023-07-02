@@ -70,13 +70,16 @@ const Register = () => {
     const handleClickRegister = () => {
         if(
             !isFilled(inputEmail) || !isFilled(inputPassword) || !isFilled(inputConfirmPassword) 
-            || (currentTypeUser === "entity" && !isFilled(inputCNPJ)) || !acceptTerms
+            || (currentTypeUser === "entity" && !isFilled(inputCNPJ))
         ) {
-            toast.error('Todos os campos devem ser preenchidos.');
+            toast.warn('Todos os campos devem ser preenchidos.');
+            return;
+        } else if (!acceptTerms) {
+            toast.warn("Você deve aceitar os termos de uso.");
             return;
         }
         else if (inputPassword !== inputConfirmPassword) {
-            toast.error('As senhas devem ser iguais.');
+            toast.warn('As senhas devem ser iguais.');
             setInputPassword('');
             setInputConfirmPassword('');
             return;

@@ -15,6 +15,7 @@ const Home = () => {
         // mostra mensagens vindas de outras páginas
         if (locate.state && locate.state.successMessage) {
             toast.success(locate.state.successMessage);
+            locate.state.successMessage = undefined;
         }
         
         // verifica se o usuário é doador ou entidade necessitada
@@ -22,6 +23,8 @@ const Home = () => {
             if (locate.state.typeUser === "donator") setTypeUser("D");
             else if (locate.state.typeUser === "entity") setTypeUser("P");
             else setTypeUser(undefined);
+        } else {
+            navigate('/login', { state: { errorMessage: 'Usuário não logado.' } });
         }
     }, []);
 
@@ -37,9 +40,6 @@ const Home = () => {
     }, []);
 
     const navigate = useNavigate();
-    if (typeUser === undefined) {
-        navigate('/login', { state: { errorMessage: 'Usuário não logado.' } })
-    }
 
     return (
         <>

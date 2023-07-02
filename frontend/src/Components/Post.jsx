@@ -3,6 +3,7 @@ import { FcLikePlaceholder, FcLike } from 'react-icons/fc';
 import { FaRegComment } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Post.css';
+import { BiUser } from 'react-icons/bi';
 
 const Post = ({ item }) => {
     // trata o botão de curtir o post
@@ -20,6 +21,7 @@ const Post = ({ item }) => {
     return (
         <div className='post-container'>
             <div className='header-post' onClick={handleUserPost}>
+                <BiUser className="icon-user"/>
                 {item.userOwner}
             </div>
             <img src={item.img} alt="post image" className='img-post' onClick={handleItemPost}/>

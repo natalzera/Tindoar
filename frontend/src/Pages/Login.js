@@ -10,9 +10,11 @@ const Login = () => {
     useEffect(() => {
         if (locate.state && locate.state.successMessage) {
             toast.success(locate.state.successMessage);
+            locate.state.successMessage = undefined;
         }
         if (locate.state && locate.state.errorMessage) {
             toast.error(locate.state.errorMessage);
+            locate.state.errorMessage = undefined;
         }
     }, []);
 

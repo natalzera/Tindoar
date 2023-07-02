@@ -12,6 +12,15 @@
 .header-post {
     font-size: 18px;
     cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3px;
+    width: fit-content;
+}
+.header-post:hover {
+    background-color: rgba(0, 0, 0, 0.151);
+    border-radius: 12px 12px 0px 0px;
 }
 
 .img-post {
@@ -32,6 +41,10 @@
     height: 20px;
     cursor: pointer;
 }
+.icon-post:hover {
+    background-color: rgba(0, 0, 0, 0.151);
+    border-radius: 5px;
+}
 
 .item-title {
     font-size: 18px;
@@ -42,4 +55,11 @@
 .item-description {
     font-size: 16px;
     cursor: pointer;
+}
+
+.icon-user {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
 }
