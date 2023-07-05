@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import "./css/Login.css";
 import "./css/Register.css";
 import Message from '../Components/Message';
+import axios from 'axios';
+import { baseURL } from '../config';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -30,9 +32,19 @@ const Register = () => {
     };
 
     // atribui os valores do input lido a cada variável referente
+    const [inputName, setInputName] = useState('');
+    const handleInputNameChange = (event) => {
+        setInputName(event.target.value);
+    };
+
     const [inputEmail, setInputEmail] = useState('');
     const handleInputEmailChange = (event) => {
         setInputEmail(event.target.value);
+    };
+
+    const [inputCPF, setInputCPF] = useState('');
+    const handleInputCPFChange = (event) => {
+        setInputCPF(event.target.value);
     };
 
     const [inputCNPJ, setInputCNPJ] = useState('');
@@ -86,11 +98,27 @@ const Register = () => {
         }
 
         // reseta os valores de input
-        setInputCNPJ('');
-        setInputEmail('');
-        setInputPassword('');
-        setInputConfirmPassword('');
-        navigate('/login', { state: { successMessage: 'Usuário registrado!' } });
+        axios({
+            url: baseURL + "/user/register",
+            method: "post",
+            data: {
+                name: inputName,
+                email: inputEmail,
+                password: inputPassword,
+                cpf: inputCPF,
+                cnpj: inputCNPJ
+            }
+        })
+        .then((res) => {
+            console.log(res.data.message);
+            navigate('/login', { state: {
+                successMessage: res.data.message,
+            }});
+        })
+        .catch((e) => {
+            console.log(e);
+            toast.error(e.response.data.message);
+        });
     };
 
     const changeForm = (currentTypeUser) => {
@@ -98,12 +126,34 @@ const Register = () => {
             return (
                 <>
                     <div className='input-login'>
+                        <p>Nome</p>
+                        <input
+                            id="input-name" 
+                            onChange={handleInputNameChange}
+                            value={inputName}
+                            type="text" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
+                    </div>
+                    <div className='input-login'>
                         <p>E-mail</p>
                         <input
                             id="input-email" 
                             onChange={handleInputEmailChange}
                             value={inputEmail}
                             type="email" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
+                    </div>
+                    <div className='input-login'>
+                        <p>CPF</p>
+                        <input
+                            id="input-cpf" 
+                            onChange={handleInputCPFChange}
+                            value={inputCPF}
+                            type="number" 
                             className="input-text"
                             onKeyDown={(e) => listenerKeyEnter(e)}
                         />

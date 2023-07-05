@@ -3,11 +3,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import "./css/Login.css";
 import Message from '../Components/Message';
+import axios from 'axios';
+
+import { baseURL } from "../config";
 
 const Login = () => {
     // mostra mensagens vindas de outras páginas
     const locate = useLocation();
     useEffect(() => {
+        console.log("Entrei:", locate.state);
         if (locate.state && locate.state.successMessage) {
             toast.success(locate.state.successMessage);
             locate.state.successMessage = undefined;
@@ -63,20 +67,27 @@ const Login = () => {
         return true;
     };
     const handleClickLogin = () => {
-        if(!isFilled(inputEmail) || !isFilled(inputPassword)) {
-            toast.error('Email e senha devem ser preenchidos.');
-            setInputEmail('');
-            setInputPassword('');
-            return;
-        }
+        axios({
+            url: baseURL + "/user/login",
+            method: "post",
+            data: {
+                email: inputEmail,
+                password: inputPassword
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            navigate('/', { state: {
+                successMessage: res.data.message, 
+                typeUser: currentTypeUser 
+            }});
+        })
+        .catch((e) => {
+            console.log(e);
+            toast.error(e.response.data.message);
+        });
 
-        // reseta os valores de input
-        setInputEmail('');
-        setInputPassword('');
-        navigate('/', { state: {
-            successMessage: 'Usuário logado!', 
-            typeUser: currentTypeUser 
-        }});
+
     };
 
     // direciona o usuário para a tela de registro
