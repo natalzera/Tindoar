@@ -1,8 +1,10 @@
 from flask import Flask, request
+from flask_cors import CORS
 from DBHelper import DBHelper as db
 from AuthHelper import AuthHelper
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/healthcheck')
@@ -30,7 +32,7 @@ def login():
 
     # gera um authentication code através do cpf. esse auth vai ser sempre o mesmo para esse cpf
     jwt = AuthHelper.generate_token(cpf)
-    return {'auth': jwt, 'name': name}, 200
+    return {'auth': str(jwt), 'name': name}, 200
 
 
 @app.route('/user/register', methods=['POST'])
