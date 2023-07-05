@@ -67,8 +67,17 @@ const Login = () => {
         return true;
     };
     const handleClickLogin = () => {
+        let url = baseURL;
+        if(currentTypeUser === "entity") {
+            url += "/entity/login";
+        } else if(currentTypeUser === "donator") {
+            url += "/user/login";
+        } else {
+            toast.error("Ocorreu algum erro!");
+        }
+
         axios({
-            url: baseURL + "/user/login",
+            url: url,
             method: "post",
             data: {
                 email: inputEmail,

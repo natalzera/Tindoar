@@ -97,9 +97,18 @@ const Register = () => {
             return;
         }
 
+        let url = baseURL;
+        if(currentTypeUser === "entity") {
+            url += "/entity/register";
+        } else if(currentTypeUser === "donator") {
+            url += "/user/register";
+        } else {
+            toast.error("Ocorreu algum erro!");
+        }
+
         // reseta os valores de input
         axios({
-            url: baseURL + "/user/register",
+            url: url,
             method: "post",
             data: {
                 name: inputName,
@@ -185,6 +194,17 @@ const Register = () => {
         } else {
             return (
                 <>
+                    <div className='input-login'>
+                        <p>Nome</p>
+                        <input
+                            id="input-email" 
+                            onChange={handleInputNameChange}
+                            value={inputName}
+                            type="text" 
+                            className="input-text"
+                            onKeyDown={(e) => listenerKeyEnter(e)}
+                        />
+                    </div>
                     <div className='input-login'>
                         <p>E-mail</p>
                         <input
