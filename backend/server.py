@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from DBHelper import DBHelper as db
 from AuthHelper import AuthHelper
+from DonationsHelper import DonationsHelper
 
 app = Flask(__name__)
 CORS(app)
@@ -115,6 +116,13 @@ def register_entity():
     }
     db.execute_query("INSERT INTO ENTITY (cnpj, email, name, password, phone, cep, num_res, comp) VALUES (:cnpj, :email, :name, :pwd, :phone, :cep, :num_res, :comp)", params=params)
     return {'message': "Successfully registered!"}, 201
+
+
+@app.route('donations', methods=['GET'])
+def get_donations():
+    donations = DonationsHelper.get_donations()
+
+    return donations, 200
 
 if __name__ == '__main__':
     app.run()
