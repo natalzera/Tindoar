@@ -1,0 +1,88 @@
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 5vh;
+}
+
+.avatar {
+    width: 200px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    border-radius: 50%;
+}
+
+.userdata {
+    margin-top: 0.1vh;
+    margin-bottom: 0.1vh;
+}
+
+.group-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.street-line {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.user-input {
+    background-color: var(--light-gray);
+    padding-left: 3px;
+    height: 24px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.password-input {
+    width: 70%;
+}
+
+.button-user {
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--theme-color), 1);
+    border-radius: 20px;
+    border-style: none;
+    display: flex;
+    width: 50%;
+    height: 30px;
+    align-self: center;
+    margin-top: 30px;
+    cursor: pointer;
+    color: white;
+    font-size: var(--font-size-p);
+    transition: 0.25s;
+}
+
+.submit-file-user, .input-file-user::file-selector-button {
+    padding: 0 6px;
+    align-items: center;
+    justify-content: center;
+    background-color: #20333b;
+    border-radius: 20px;
+    border-style: none;
+    height: 30px;
+    align-self: center;
+    cursor: pointer;
+    color: white;
+    font-size: var(--font-size-p);
+    transition: 0.25s;
+}
+
+.button-user:hover, .submit-file-user:hover, .input-file-user::file-selector-button:hover {
+    color: #20333b;
+    background-color: rgba(var(--theme-color), 0.2);
+}
+
+.bigtext {
+    font-size: 18px;
+}

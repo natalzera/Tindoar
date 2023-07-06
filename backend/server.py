@@ -84,7 +84,7 @@ def login_entity():
 
     # gera um authentication code através do cpf. esse auth vai ser sempre o mesmo para esse cpf
     jwt = AuthHelper.generate_token(cpf)
-    return {'auth': jwt, 'name': name}, 200
+    return {'auth': str(jwt), 'name': name}, 200
 
 @app.route('/entity/register', methods=['POST'])
 def register_entity():
@@ -118,11 +118,17 @@ def register_entity():
     return {'message': "Successfully registered!"}, 201
 
 
-@app.route('donations', methods=['GET'])
+@app.route('/donations', methods=['GET'])
 def get_donations():
     donations = DonationsHelper.get_donations()
 
-    return donations, 200
+    return {"donations": donations}, 200
+
+@app.route('/donations/request', methods=['GET'])
+def get_donations_request():
+    donations = DonationsHelper.get_donations_request()
+
+    return {"donations":donations}, 200
 
 if __name__ == '__main__':
     app.run()

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useCookies } from "react-cookie";
 import "./css/Login.css";
 import Message from '../Components/Message';
 import axios from 'axios';
@@ -8,6 +9,8 @@ import axios from 'axios';
 import { baseURL } from "../config";
 
 const Login = () => {
+    const [cookies, setCookies, removeCookies] = useCookies(["user", "typeUser"]);
+
     // mostra mensagens vindas de outras páginas
     const locate = useLocation();
     useEffect(() => {
@@ -86,6 +89,8 @@ const Login = () => {
         })
         .then((res) => {
             console.log(res);
+            setCookies("user", res.data.auth);
+            setCookies("typeUser", currentTypeUser);
             navigate('/', { state: {
                 successMessage: res.data.message, 
                 typeUser: currentTypeUser 

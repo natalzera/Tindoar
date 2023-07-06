@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 import { FaSearch } from 'react-icons/fa';
 import { BiHomeAlt2, BiUserCircle, BiLogOut, BiLogIn, BiCheckboxChecked } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import "./Header.css";
 
 const Header = () => {
+    const [cookies, setCookies, removeCookies] = useCookies(["user", "typeUser"]);
+    useEffect(() => {
+        if (!cookies.user || !cookies.typeUser) {
+            removeCookies("user");
+            removeCookies("typeUser");
+            navigate('/login', { state: { errorMessage: 'Usuário não logado.' } });
+            return;
+        }
+    }, [])
     const navigate = useNavigate();
 
     // navegações simples
     const handleHomeClick = () => { navigate('/'); };
     const handleUserClick = () => { navigate('/user'); };
     const handleLogOutClick = () => {
+        removeCookies("user");
+        removeCookies("typeUser");
         navigate('/login', { state: { successMessage: 'Usuário Deslogado.' } });
     };
 
